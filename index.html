@@ -1,429 +1,211 @@
-<!DOCTYPE html><html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PALLAPU Shopping</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f5f6fa;color:#222}
-header{background:#5424a8;color:white;padding:20px 16px}
-header h1{margin:0;font-size:27px;letter-spacing:1px}
-header p{margin:6px 0 0;font-size:13px}
-.search{padding:15px;background:white}
-.search input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font-size:15px}
-h2{font-size:19px;margin:20px 15px 12px}
-.categories{display:flex;gap:10px;overflow-x:auto;padding:0 15px}
-.category{background:white;padding:15px 18px;border-radius:12px;min-width:95px;text-align:center;font-size:13px;box-shadow:0 2px 8px #ddd}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 12px 80px}
-.product{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px #ddd}
-.product img{width:100%;height:135px;object-fit:cover;background:#eee}
-.details{padding:11px}
-.details h3{font-size:14px;margin:0 0 8px}
-.price{font-weight:bold;color:#5424a8;font-size:17px}
-button{border:0;background:#5424a8;color:white;padding:10px;border-radius:7px;width:100%;margin-top:10px}
-nav{position:fixed;bottom:0;left:0;width:100%;display:flex;justify-content:space-around;background:white;padding:12px 0;box-shadow:0 -2px 10px #ddd}
-nav a{text-decoration:none;color:#5424a8;font-size:12px;text-align:center}
-</style>
-</head>
-<body>
-<header>
-<h1>PALLAPU</h1>
-<p>Everything you love, in one place.</p>
-</header>
-<div class="search">
-<input id="search" type="search" placeholder="Search products..." oninput="filterProducts()">
-</div>
-<h2>Shop by Category</h2>
-<div class="categories">
-<div class="category">👕<br>Fashion</div>
-<div class="category">📱<br>Electronics</div>
-<div class="category">🏠<br>Home</div>
-<div class="category">💄<br>Beauty</div>
-<div class="category">👟<br>Footwear</div>
-</div>
-<h2>Featured Products</h2>
-<div class="products" id="products">
-<div class="product" data-name="Classic T-Shirt">
-<img src="https://placehold.co/400x300/f0e6ff/5424a8?text=T-Shirt" alt="T-Shirt">
-<div class="details"><h3>Classic T-Shirt</h3><div class="price">₹399</div><button onclick="addToCart('Classic T-Shirt')">Add to Cart</button></div>
-</div>
-<div class="product" data-name="Wireless Headphones">
-<img src="https://placehold.co/400x300/e6f4ff/225588?text=Headphones" alt="Headphones">
-<div class="details"><h3>Wireless Headphones</h3><div class="price">₹999</div><button onclick="addToCart('Wireless Headphones')">Add to Cart</button></div>
-</div>
-<div class="product" data-name="Casual Shoes">
-<img src="https://placehold.co/400x300/fff0e6/884422?text=Shoes" alt="Shoes">
-<div class="details"><h3>Casual Shoes</h3><div class="price">₹799</div><button onclick="addToCart('Casual Shoes')">Add to Cart</button></div>
-</div>
-<div class="product" data-name="Smart Watch">
-<img src="https://placehold.co/400x300/e6fff0/226644?text=Smart+Watch" alt="Smart Watch">
-<div class="details"><h3>Smart Watch</h3><div class="price">₹1499</div><button onclick="addToCart('Smart Watch')">Add to Cart</button></div>
-</div>
-</div>
-<nav>
-<a href="#">🏠<br>Home</a>
-<a href="#products">🛍️<br>Products</a>
-<a href="#" onclick="showCart()">🛒<br>Cart</a>
-<a href="#" onclick="showAccount()">👤<br>Account</a>
-</nav>
-<script>
-let cart=[];
-function addToCart(name){
-cart.push(name);
-alert(name+" added to cart!");
-}
-function showCart(){
-alert(cart.length ? "Your cart:\\n"+cart.join("\\n") : "Your cart is empty.");
-}
-function showAccount(){
-alert("Customer and Seller accounts will be added in the next development step.");
-}
-function filterProducts(){
-const q=document.getElementById("search").value.toLowerCase();
-document.querySelectorAll(".product").forEach(p=>{
-p.style.display=p.dataset.name.toLowerCase().includes(q)?"block":"none";
-});
-}
-</script>
-</body>
-</html>
-<!DOCTYPE html><html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PALLAPU | Login</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f5f3fa;color:#222}
-header{background:#5424a8;color:white;padding:22px;text-align:center}
-header h1{margin:0;font-size:28px}
-header p{margin:7px 0 0}
-.container{max-width:420px;margin:24px auto;padding:20px}
-.tabs{display:flex;gap:8px;margin-bottom:18px}
-.tabs button{flex:1;padding:12px 5px;border:0;border-radius:8px;background:#ddd;color:#222}
-.tabs button.active{background:#5424a8;color:white}
-.card{background:white;padding:22px;border-radius:15px;box-shadow:0 3px 15px #ddd}
-h2{margin-top:0;text-align:center}
-label{display:block;margin-top:14px;font-size:14px}
-input,select{width:100%;padding:12px;margin-top:6px;border:1px solid #ccc;border-radius:8px;font-size:15px}
-.primary{width:100%;padding:13px;background:#5424a8;color:white;border:0;border-radius:8px;margin-top:20px;font-size:16px}
-.switch{text-align:center;font-size:14px;margin-top:18px}
-.switch a{color:#5424a8;cursor:pointer}
-.note{font-size:12px;color:#666;line-height:1.5;text-align:center;margin-top:15px}
-</style>
-</head>
-<body>
-<header>
-<h1>PALLAPU</h1>
-<p>Your shopping destination</p>
-</header><div class="container">
-<div class="tabs">
-<button class="active" onclick="setRole('customer',this)">Customer</button>
-<button onclick="setRole('seller',this)">Seller</button>
-</div><div class="card">
-<h2 id="title">Customer Login</h2><form onsubmit="demoSubmit(event)">
-<div id="nameField" style="display:none">
-<label>Full Name</label>
-<input type="text" id="name" placeholder="Enter your full name">
-</div><div id="storeField" style="display:none">
-<label>Store Name</label>
-<input type="text" id="store" placeholder="Enter your store name">
-</div><label>Email Address</label>
-<input type="email" id="email" placeholder="Enter email" required>
-
-<label>Phone Number</label>
-<input type="tel" id="phone" placeholder="Enter phone number" pattern="[0-9]{10}" required>
-
-<label>Password</label>
-<input type="password" id="password" placeholder="Enter password" minlength="8" required>
-
-<div id="confirmField" style="display:none">
-<label>Confirm Password</label>
-<input type="password" id="confirm" placeholder="Re-enter password" minlength="8">
-</div><button class="primary" id="submitBtn" type="submit">Login</button>
-
-</form><div class="switch">
-<span id="switchText">New to PALLAPU?</span>
-<a onclick="toggleMode()" id="switchLink">Create Account</a>
-</div><p class="note">Demo interface only. Real account creation and secure authentication are not connected yet.</p>
-</div>
-</div><script>
-let role="customer";
-let mode="login";
-
-function setRole(newRole,button){
-role=newRole;
-document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-button.classList.add("active");
-updateUI();
-}
-
-function toggleMode(){
-mode=mode==="login"?"register":"login";
-updateUI();
-}
-
-function updateUI(){
-const registering=mode==="register";
-document.getElementById("title").textContent=
-(role==="customer"?"Customer":"Seller")+" "+(registering?"Registration":"Login");
-document.getElementById("nameField").style.display=registering?"block":"none";
-document.getElementById("storeField").style.display=registering&&role==="seller"?"block":"none";
-document.getElementById("confirmField").style.display=registering?"block":"none";
-document.getElementById("name").required=registering;
-document.getElementById("store").required=registering&&role==="seller";
-document.getElementById("confirm").required=registering;
-document.getElementById("submitBtn").textContent=registering?"Create Account":"Login";
-document.getElementById("switchText").textContent=registering?"Already registered?":"New to PALLAPU?";
-document.getElementById("switchLink").textContent=registering?"Login":"Create Account";
-}
-
-function demoSubmit(event){
-event.preventDefault();
-if(mode==="register"&&document.getElementById("password").value!==document.getElementById("confirm").value){
-alert("Passwords do not match.");
-return;
-}
-alert("This is a demo only. Real account services are not connected yet.");
-}
-</script></body>
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PALLAPU - Products</title>
+<title>PALLAPU | Online Shopping</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f5f9;
-  color: #222;
-}
-
-header {
-  background: #5422a8;
-  color: white;
-  padding: 18px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-header p {
-  margin-bottom: 0;
-}
-
-.search {
-  padding: 15px;
-  background: white;
-}
-
-.search input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.categories {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 12px;
-  background: white;
-}
-
-.categories button {
-  border: 0;
-  background: #eee6ff;
-  color: #5422a8;
-  border-radius: 20px;
-  padding: 10px 15px;
-  white-space: nowrap;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  padding: 12px;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 2px 8px #00000010;
-}
-
-.photo {
-  height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f0ecf9;
-  border-radius: 8px;
-  font-size: 48px;
-}
-
-.card h3 {
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-
-.price {
-  color: #16803c;
-  font-weight: bold;
-}
-
-.card button {
-  width: 100%;
-  padding: 10px;
-  border: 0;
-  border-radius: 7px;
-  background: #5422a8;
-  color: white;
-  margin-top: 8px;
-}
-
-nav {
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  justify-content: space-around;
-  padding: 14px 5px;
-  background: white;
-  border-top: 1px solid #ddd;
-}
-
-nav a {
-  text-decoration: none;
-  color: #5422a8;
-  font-size: 14px;
-}
-
-#message {
-  text-align: center;
-  padding: 10px;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f6fa;color:#202124}
+header{background:#5422a8;color:white;padding:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.logo{font-size:25px;font-weight:bold;letter-spacing:1px}
+.header-links{display:flex;gap:8px}
+.header-links a{color:white;text-decoration:none;font-size:13px}
+.searchbox{margin-top:15px}
+.searchbox input{width:100%;padding:13px;border:none;border-radius:8px;font-size:16px}
+.banner{margin:14px;padding:22px;border-radius:14px;background:linear-gradient(120deg,#5422a8,#9b5de5);color:white}
+.banner h2{font-size:24px;margin-bottom:8px}
+.banner p{font-size:14px;line-height:1.5}
+.section-title{padding:8px 14px;font-size:20px}
+.categories{display:flex;gap:10px;padding:12px;overflow-x:auto}
+.cat{min-width:90px;background:white;padding:14px 8px;text-align:center;border-radius:12px;box-shadow:0 2px 7px #0000000c;cursor:pointer;border:1px solid #eee}
+.cat span{display:block;font-size:28px;margin-bottom:8px}
+.cat small{font-size:12px}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px}
+.card{background:white;border-radius:12px;padding:10px;box-shadow:0 2px 8px #0000000c;overflow:hidden}
+.product-image{height:135px;background:#f0eafa;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:54px}
+.card h3{font-size:15px;margin-top:10px;line-height:1.4}
+.description{font-size:12px;color:#777;margin-top:5px}
+.price{font-size:18px;color:#18864b;font-weight:bold;margin-top:8px}
+.old-price{font-size:12px;color:#888;text-decoration:line-through;margin-left:5px}
+.card button{width:100%;border:0;border-radius:7px;padding:10px;margin-top:9px;cursor:pointer;font-weight:bold}
+.add{background:#5422a8;color:white}
+.wish{background:#f0eafa;color:#5422a8}
+.empty{padding:20px;text-align:center;grid-column:1/-1;color:#777}
+.info{margin:14px;background:white;padding:16px;border-radius:12px;line-height:1.8}
+.info h3{color:#5422a8}
+footer{background:#25133e;color:white;text-align:center;padding:22px;font-size:13px;line-height:2}
+.bottom-nav{position:sticky;bottom:0;display:flex;justify-content:space-around;gap:5px;background:white;border-top:1px solid #ddd;padding:12px 3px;z-index:5}
+.bottom-nav a{color:#5422a8;text-decoration:none;text-align:center;font-size:12px}
+.notice{text-align:center;padding:10px;color:#16803c;font-size:14px}
+@media(min-width:650px){.products{grid-template-columns:repeat(4,minmax(0,1fr))}.banner{padding:35px}.product-image{height:180px}}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>PALLAPU</h1>
-  <p>Everything you need, in one place!</p>
+  <div class="top">
+    <div class="logo">PALLAPU</div>
+    <div class="header-links">
+      <a href="login.html">Customer Login</a>
+      <a href="login.html">Seller Login</a>
+    </div>
+  </div>
+  <div class="searchbox">
+    <input id="search" type="search" placeholder="🔍 Search products..." oninput="renderProducts()">
+  </div>
 </header>
 
-<div class="search">
-  <input id="searchBox" type="search"
-    placeholder="Search products..."
-    oninput="searchProducts()">
-</div>
-
-<div class="categories">
-  <button onclick="filterCategory('All')">All</button>
-  <button onclick="filterCategory('Fashion')">Fashion</button>
-  <button onclick="filterCategory('Electronics')">Electronics</button>
-  <button onclick="filterCategory('Footwear')">Footwear</button>
-  <button onclick="filterCategory('Home')">Home</button>
-</div>
-
-<div id="message"></div>
-
-<section class="products" id="products">
-
-  <div class="card" data-category="Fashion">
-    <div class="photo">👕</div>
-    <h3>Casual T-Shirt</h3>
-    <p class="price">₹399</p>
-    <button onclick="addToCart('Casual T-Shirt',399)">Add to Cart</button>
-  </div>
-
-  <div class="card" data-category="Electronics">
-    <div class="photo">🎧</div>
-    <h3>Wireless Headphones</h3>
-    <p class="price">₹999</p>
-    <button onclick="addToCart('Wireless Headphones',999)">Add to Cart</button>
-  </div>
-
-  <div class="card" data-category="Footwear">
-    <div class="photo">👟</div>
-    <h3>Sports Shoes</h3>
-    <p class="price">₹799</p>
-    <button onclick="addToCart('Sports Shoes',799)">Add to Cart</button>
-  </div>
-
-  <div class="card" data-category="Home">
-    <div class="photo">🏠</div>
-    <h3>Home Essentials</h3>
-    <p class="price">₹499</p>
-    <button onclick="addToCart('Home Essentials',499)">Add to Cart</button>
-  </div>
-
+<section class="banner">
+  <h2>Welcome to PALLAPU!</h2>
+  <p>Discover fashion, electronics, footwear and home essentials—all in one place.</p>
 </section>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="products.html">Products</a>
-  <a href="login.html">Login</a>
-  <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+<h2 class="section-title">Shop by Category</h2>
+
+<div class="categories">
+  <button class="cat" onclick="chooseCategory('All')"><span>🛍️</span><small>All Products</small></button>
+  <button class="cat" onclick="chooseCategory('Fashion')"><span>👕</span><small>Fashion</small></button>
+  <button class="cat" onclick="chooseCategory('Electronics')"><span>📱</span><small>Electronics</small></button>
+  <button class="cat" onclick="chooseCategory('Footwear')"><span>👟</span><small>Footwear</small></button>
+  <button class="cat" onclick="chooseCategory('Home')"><span>🏠</span><small>Home</small></button>
+  <button class="cat" onclick="chooseCategory('Beauty')"><span>✨</span><small>Beauty</small></button>
+</div>
+
+<h2 class="section-title" id="productHeading">Popular Products</h2>
+
+<div class="products" id="products"></div>
+<div class="notice" id="notice" aria-live="polite"></div>
+
+<section class="info">
+  <h3>Welcome to PALLAPU Shopping</h3>
+  <p>🛍️ Multiple product categories</p>
+  <p>🔎 Easy product search</p>
+  <p>🛒 Add products to your cart</p>
+  <p>🏪 Seller registration coming next</p>
+</section>
+
+<footer>
+  <strong>PALLAPU</strong><br>
+  Your Shopping Destination<br>
+  Customer Support | Seller Centre<br>
+  © 2026 PALLAPU. All rights reserved.
+</footer>
+
+<nav class="bottom-nav">
+  <a href="index.html">🏠<br>Home</a>
+  <a href="#products">🛍️<br>Products</a>
+  <a href="cart.html">🛒<br>Cart <span id="cartCount">0</span></a>
+  <a href="login.html">👤<br>Account</a>
 </nav>
 
 <script>
-let cart = JSON.parse(localStorage.getItem('pallapuCart') || '[]');
+const productList = [
+ {id:1,name:"Classic T-Shirt",category:"Fashion",price:399,old:599,icon:"👕"},
+ {id:2,name:"Women's Fashion",category:"Fashion",price:599,old:899,icon:"👗"},
+ {id:3,name:"Wireless Headphones",category:"Electronics",price:999,old:1499,icon:"🎧"},
+ {id:4,name:"Smart Watch",category:"Electronics",price:1299,old:1999,icon:"⌚"},
+ {id:5,name:"Running Shoes",category:"Footwear",price:799,old:1199,icon:"👟"},
+ {id:6,name:"Casual Sandals",category:"Footwear",price:399,old:699,icon:"🩴"},
+ {id:7,name:"Home Essentials",category:"Home",price:499,old:799,icon:"🏠"},
+ {id:8,name:"Kitchen Set",category:"Home",price:699,old:999,icon:"🍽️"},
+ {id:9,name:"Beauty Essentials",category:"Beauty",price:299,old:499,icon:"🧴"},
+ {id:10,name:"Backpack",category:"Fashion",price:699,old:999,icon:"🎒"},
+ {id:11,name:"Mobile Phone",category:"Electronics",price:9999,old:11999,icon:"📱"},
+ {id:12,name:"Sunglasses",category:"Fashion",price:249,old:399,icon:"🕶️"}
+];
 
-function updateCartCount() {
-  document.getElementById('cartCount').textContent =
-    cart.reduce((sum, item) => sum + item.quantity, 0);
+let selectedCategory = "All";
+let cart = [];
+
+try {
+ const saved = JSON.parse(localStorage.getItem("pallapuCart") || "[]");
+ if (Array.isArray(saved)) cart = saved;
+} catch(e) {}
+
+function renderProducts(){
+ const query = document.getElementById("search").value.toLowerCase();
+ const filtered = productList.filter(p =>
+  (selectedCategory === "All" || p.category === selectedCategory) &&
+  p.name.toLowerCase().includes(query)
+ );
+
+ document.getElementById("productHeading").textContent =
+  selectedCategory === "All" ? "Popular Products" : selectedCategory + " Products";
+
+ const container = document.getElementById("products");
+
+ if(filtered.length === 0){
+  container.innerHTML = '<div class="empty">No products found. Try another search.</div>';
+  return;
+ }
+
+ container.innerHTML = filtered.map(p => `
+  <article class="card">
+   <div class="product-image">${p.icon}</div>
+   <h3>${p.name}</h3>
+   <div class="description">${p.category}</div>
+   <div class="price">₹${p.price}<span class="old-price">₹${p.old}</span></div>
+   <button class="add" onclick="addToCart(${p.id})">🛒 Add to Cart</button>
+   <button class="wish" onclick="addWishlist(${p.id})">♡ Wishlist</button>
+  </article>
+ `).join("");
 }
 
-function addToCart(name, price) {
-  const item = cart.find(product => product.name === name);
-
-  if (item) {
-    item.quantity++;
-  } else {
-    cart.push({ name, price, quantity: 1 });
-  }
-
-  localStorage.setItem('pallapuCart', JSON.stringify(cart));
-  updateCartCount();
-
-  document.getElementById('message').textContent =
-    name + ' added to your cart!';
+function chooseCategory(category){
+ selectedCategory = category;
+ renderProducts();
+ document.getElementById("products").scrollIntoView({behavior:"smooth"});
 }
 
-function filterCategory(category) {
-  document.querySelectorAll('.card').forEach(card => {
-    card.style.display =
-      category === 'All' || card.dataset.category === category
-      ? 'block' : 'none';
-  });
+function addToCart(id){
+ const product = productList.find(p => p.id === id);
+ if(!product) return;
+
+ const existing = cart.find(item => item.id === id);
+ if(existing) existing.quantity += 1;
+ else cart.push({...product,quantity:1});
+
+ try {
+  localStorage.setItem("pallapuCart",JSON.stringify(cart));
+ } catch(e) {}
+
+ updateCartCount();
+ showNotice(product.name + " added to cart!");
 }
 
-function searchProducts() {
-  const query = document.getElementById('searchBox').value.toLowerCase();
-
-  document.querySelectorAll('.card').forEach(card => {
-    card.style.display =
-      card.textContent.toLowerCase().includes(query)
-      ? 'block' : 'none';
-  });
+function updateCartCount(){
+ document.getElementById("cartCount").textContent =
+  cart.reduce((total,item) => total + (Number(item.quantity) || 0),0);
 }
 
+function addWishlist(id){
+ const product = productList.find(p => p.id === id);
+ if(!product) return;
+
+ let wishlist = [];
+ try {
+  wishlist = JSON.parse(localStorage.getItem("pallapuWishlist") || "[]");
+  if(!Array.isArray(wishlist)) wishlist = [];
+ } catch(e) {}
+
+ if(!wishlist.includes(id)) wishlist.push(id);
+ localStorage.setItem("pallapuWishlist",JSON.stringify(wishlist));
+ showNotice(product.name + " added to wishlist!");
+}
+
+function showNotice(message){
+ const notice = document.getElementById("notice");
+ notice.textContent = message;
+ setTimeout(() => {
+  if(notice.textContent === message) notice.textContent = "";
+ },2500);
+}
+
+renderProducts();
 updateCartCount();
 </script>
 
