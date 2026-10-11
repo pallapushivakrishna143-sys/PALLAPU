@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PALLAPU - Login & Registration</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f2fa;
+  color:#222;
+}
+header{
+  background:#5422a8;
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+header h1{margin:0;font-size:28px}
+header p{margin-bottom:0}
+.container{
+  max-width:440px;
+  margin:25px auto;
+  padding:20px;
+}
+.card{
+  background:white;
+  padding:22px;
+  border-radius:15px;
+  box-shadow:0 4px 18px #00000010;
+}
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+}
+.tabs button{
+  flex:1;
+  padding:12px 5px;
+  border:0;
+  border-radius:8px;
+  background:#eee7fb;
+  color:#5422a8;
+  font-weight:bold;
+}
+.tabs button.active{
+  background:#5422a8;
+  color:white;
+}
+h2{font-size:22px;margin-top:0}
+label{
+  display:block;
+  margin-top:14px;
+  margin-bottom:6px;
+  font-size:14px;
+  font-weight:bold;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:15px;
+  background:white;
+}
+.primary{
+  width:100%;
+  padding:13px;
+  margin-top:20px;
+  background:#5422a8;
+  color:white;
+  border:0;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
+}
+.message{
+  margin-top:15px;
+  padding:12px;
+  border-radius:8px;
+  background:#f0eafa;
+  color:#5422a8;
+  line-height:1.5;
+  display:none;
+}
+.home{
+  display:block;
+  margin-top:20px;
+  text-align:center;
+  color:#5422a8;
+  text-decoration:none;
+}
+.note{
+  font-size:12px;
+  color:#666;
+  line-height:1.6;
+  margin-top:15px;
+}
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>PALLAPU</h1>
+  <p>Your Shopping Destination</p>
+</header>
+
+<div class="container">
+  <div class="card">
+
+    <div class="tabs">
+      <button id="customerTab" class="active"
+        onclick="setRole('Customer')">Customer</button>
+      <button id="sellerTab"
+        onclick="setRole('Seller')">Seller</button>
+    </div>
+
+    <h2 id="heading">Customer Account</h2>
+
+    <form id="accountForm">
+      <div id="nameField">
+        <label for="name">Full Name</label>
+        <input id="name" type="text" autocomplete="name"
+          placeholder="Enter your full name" required>
+      </div>
+
+      <div id="storeField" class="hidden">
+        <label for="store">Store Name</label>
+        <input id="store" type="text"
+          placeholder="Enter your store name">
+      </div>
+
+      <label for="email">Email Address</label>
+      <input id="email" type="email" autocomplete="email"
+        placeholder="Enter your email" required>
+
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" autocomplete="tel"
+        placeholder="Enter phone number" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password"
+        autocomplete="new-password"
+        placeholder="Create a password (minimum 8 characters)"
+        minlength="8" required>
+
+      <button class="primary" type="submit">Continue</button>
+    </form>
+
+    <div id="message" class="message" role="status"></div>
+
+    <p class="note">
+      Demo only: this page does not create a real account or securely
+      save passwords. Do not enter a real password. Real customer and
+      seller accounts require a secure backend and database.
+    </p>
+
+    <a class="home" href="index.html">← Back to PALLAPU Shopping</a>
+
+  </div>
+</div>
+
+<script>
+let currentRole = "Customer";
+
+function setRole(role){
+  currentRole = role;
+
+  document.getElementById("customerTab").classList.toggle(
+    "active", role === "Customer"
+  );
+
+  document.getElementById("sellerTab").classList.toggle(
+    "active", role === "Seller"
+  );
+
+  document.getElementById("heading").textContent =
+    role + " Account";
+
+  document.getElementById("storeField").classList.toggle(
+    "hidden", role !== "Seller"
+  );
+
+  document.getElementById("store").required =
+    role === "Seller";
+
+  document.getElementById("nameField").classList.remove("hidden");
+
+  document.getElementById("message").style.display = "none";
+}
+
+document.getElementById("accountForm").addEventListener(
+  "submit", function(event){
+    event.preventDefault();
+
+    const message = document.getElementById("message");
+    message.style.display = "block";
+
+    message.textContent =
+      "This is a demonstration page. " +
+      "Real " + currentRole +
+      " registration is not connected yet. " +
+      "No account or password has been saved.";
+  }
+);
+</script>
+
+</body>
+</html>
