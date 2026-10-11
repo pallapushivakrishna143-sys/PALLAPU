@@ -188,3 +188,244 @@ alert("This is a demo only. Real account services are not connected yet.");
 }
 </script></body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PALLAPU - Products</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f5f9;
+  color: #222;
+}
+
+header {
+  background: #5422a8;
+  color: white;
+  padding: 18px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+header p {
+  margin-bottom: 0;
+}
+
+.search {
+  padding: 15px;
+  background: white;
+}
+
+.search input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 12px;
+  background: white;
+}
+
+.categories button {
+  border: 0;
+  background: #eee6ff;
+  color: #5422a8;
+  border-radius: 20px;
+  padding: 10px 15px;
+  white-space: nowrap;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 12px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px #00000010;
+}
+
+.photo {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0ecf9;
+  border-radius: 8px;
+  font-size: 48px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.price {
+  color: #16803c;
+  font-weight: bold;
+}
+
+.card button {
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 7px;
+  background: #5422a8;
+  color: white;
+  margin-top: 8px;
+}
+
+nav {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 14px 5px;
+  background: white;
+  border-top: 1px solid #ddd;
+}
+
+nav a {
+  text-decoration: none;
+  color: #5422a8;
+  font-size: 14px;
+}
+
+#message {
+  text-align: center;
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>PALLAPU</h1>
+  <p>Everything you need, in one place!</p>
+</header>
+
+<div class="search">
+  <input id="searchBox" type="search"
+    placeholder="Search products..."
+    oninput="searchProducts()">
+</div>
+
+<div class="categories">
+  <button onclick="filterCategory('All')">All</button>
+  <button onclick="filterCategory('Fashion')">Fashion</button>
+  <button onclick="filterCategory('Electronics')">Electronics</button>
+  <button onclick="filterCategory('Footwear')">Footwear</button>
+  <button onclick="filterCategory('Home')">Home</button>
+</div>
+
+<div id="message"></div>
+
+<section class="products" id="products">
+
+  <div class="card" data-category="Fashion">
+    <div class="photo">👕</div>
+    <h3>Casual T-Shirt</h3>
+    <p class="price">₹399</p>
+    <button onclick="addToCart('Casual T-Shirt',399)">Add to Cart</button>
+  </div>
+
+  <div class="card" data-category="Electronics">
+    <div class="photo">🎧</div>
+    <h3>Wireless Headphones</h3>
+    <p class="price">₹999</p>
+    <button onclick="addToCart('Wireless Headphones',999)">Add to Cart</button>
+  </div>
+
+  <div class="card" data-category="Footwear">
+    <div class="photo">👟</div>
+    <h3>Sports Shoes</h3>
+    <p class="price">₹799</p>
+    <button onclick="addToCart('Sports Shoes',799)">Add to Cart</button>
+  </div>
+
+  <div class="card" data-category="Home">
+    <div class="photo">🏠</div>
+    <h3>Home Essentials</h3>
+    <p class="price">₹499</p>
+    <button onclick="addToCart('Home Essentials',499)">Add to Cart</button>
+  </div>
+
+</section>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="login.html">Login</a>
+  <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+</nav>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('pallapuCart') || '[]');
+
+function updateCartCount() {
+  document.getElementById('cartCount').textContent =
+    cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+function addToCart(name, price) {
+  const item = cart.find(product => product.name === name);
+
+  if (item) {
+    item.quantity++;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
+
+  localStorage.setItem('pallapuCart', JSON.stringify(cart));
+  updateCartCount();
+
+  document.getElementById('message').textContent =
+    name + ' added to your cart!';
+}
+
+function filterCategory(category) {
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.display =
+      category === 'All' || card.dataset.category === category
+      ? 'block' : 'none';
+  });
+}
+
+function searchProducts() {
+  const query = document.getElementById('searchBox').value.toLowerCase();
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.display =
+      card.textContent.toLowerCase().includes(query)
+      ? 'block' : 'none';
+  });
+}
+
+updateCartCount();
+</script>
+
+</body>
+</html>
