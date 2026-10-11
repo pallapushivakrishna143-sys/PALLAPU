@@ -2,308 +2,165 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PALLAPU - Login & Register</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PALLAPU Login</title>
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f2fa;
-  color:#222;
-}
-header{
-  background:#5422a8;
-  color:white;
-  text-align:center;
-  padding:22px;
-}
-header h1{margin:0;font-size:29px}
-header p{margin:8px 0 0}
-.container{
-  max-width:440px;
-  margin:25px auto;
-  padding:15px;
-}
-.card{
-  background:white;
-  padding:22px;
-  border-radius:15px;
-  box-shadow:0 4px 15px #00000010;
-}
-.roles,.actions{
-  display:flex;
-  gap:10px;
-  margin-bottom:18px;
-}
-button{
-  cursor:pointer;
-  font-size:15px;
-}
-.roles button,.actions button{
-  flex:1;
-  padding:12px 5px;
-  border:0;
-  border-radius:8px;
-  background:#eee7fb;
-  color:#5422a8;
-  font-weight:bold;
-}
-button.active{
-  background:#5422a8;
-  color:white;
-}
-h2{margin:5px 0 18px;font-size:23px}
-label{
-  display:block;
-  margin:13px 0 6px;
-  font-weight:bold;
-  font-size:14px;
-}
-input{
-  width:100%;
-  padding:12px;
-  border:1px solid #ccc;
-  border-radius:8px;
-  font-size:15px;
-}
-.submit{
-  width:100%;
-  padding:13px;
-  margin-top:20px;
-  border:0;
-  border-radius:8px;
-  color:white;
-  background:#5422a8;
-  font-weight:bold;
-}
-.hidden{display:none}
-.message{
-  display:none;
-  margin-top:15px;
-  padding:12px;
-  border-radius:8px;
-  background:#f0eafa;
-  color:#5422a8;
-  line-height:1.5;
-}
-.home{
-  display:block;
-  text-align:center;
-  margin-top:20px;
-  color:#5422a8;
-  text-decoration:none;
-}
-.note{
-  color:#777;
-  font-size:12px;
-  line-height:1.6;
-  margin-top:18px;
-}
+body{font-family:Arial;background:#f4f5f9;margin:0;color:#222}
+header{background:#5624b8;color:white;padding:20px;text-align:center}
+main{max-width:440px;margin:25px auto;padding:18px}
+.card{background:white;padding:22px;border-radius:12px;box-shadow:0 2px 10px #0001}
+input,select,button{box-sizing:border-box;width:100%;padding:12px;margin:8px 0;border-radius:7px;font-size:16px}
+input,select{border:1px solid #ccc}
+button{border:0;background:#5624b8;color:white;font-weight:bold}
+.secondary{background:#444}
+#message{overflow-wrap:anywhere;line-height:1.5}
+a{color:#5624b8}
 </style>
 </head>
-
 <body>
-
 <header>
-  <h1>PALLAPU</h1>
-  <p>Your Shopping Destination</p>
+<h1>🛍️ PALLAPU</h1>
+<p>Customer & Seller Account</p>
 </header>
 
-<main class="container">
-<div class="card">
+<main>
+<section class="card">
+<h2>Create Account / Login</h2>
 
-  <div class="roles">
-    <button id="customerBtn" class="active"
-      type="button" onclick="setRole('Customer')">
-      🛍️ Customer
-    </button>
+<label for="role">Account Type</label>
+<select id="role">
+<option value="customer">Customer</option>
+<option value="seller">Seller</option>
+</select>
 
-    <button id="sellerBtn" type="button"
-      onclick="setRole('Seller')">
-      🏪 Seller
-    </button>
-  </div>
+<label for="name">Full Name (for registration)</label>
+<input id="name" autocomplete="name" placeholder="Full name">
 
-  <div class="actions">
-    <button id="loginBtn" type="button"
-      onclick="setMode('Login')">Login</button>
+<label for="email">Email</label>
+<input id="email" type="email" autocomplete="email" required placeholder="you@example.com">
 
-    <button id="registerBtn" class="active"
-      type="button" onclick="setMode('Register')">
-      Register
-    </button>
-  </div>
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="current-password"
+       minlength="6" required placeholder="At least 6 characters">
 
-  <h2 id="heading">Create Customer Account</h2>
+<button id="register">Create Account</button>
+<button id="login">Login</button>
+<button id="logout" class="secondary" hidden>Logout</button>
 
-  <form id="accountForm">
-
-    <div id="nameGroup">
-      <label for="fullName">Full Name</label>
-      <input id="fullName" type="text"
-        placeholder="Enter your full name"
-        autocomplete="name">
-    </div>
-
-    <div id="storeGroup" class="hidden">
-      <label for="storeName">Store Name</label>
-      <input id="storeName" type="text"
-        placeholder="Enter your store name">
-    </div>
-
-    <div id="emailGroup">
-      <label for="email">Email Address</label>
-      <input id="email" type="email"
-        placeholder="Enter your email"
-        autocomplete="email" required>
-    </div>
-
-    <div id="phoneGroup">
-      <label for="phone">Phone Number</label>
-      <input id="phone" type="tel"
-        placeholder="Enter your phone number"
-        autocomplete="tel">
-    </div>
-
-    <div>
-      <label for="password">Password</label>
-      <input id="password" type="password"
-        placeholder="Enter password"
-        autocomplete="current-password"
-        minlength="8" required>
-    </div>
-
-    <div id="confirmGroup">
-      <label for="confirmPassword">Confirm Password</label>
-      <input id="confirmPassword" type="password"
-        placeholder="Re-enter password"
-        minlength="8">
-    </div>
-
-    <button class="submit" id="submitBtn" type="submit">
-      Create Account
-    </button>
-
-  </form>
-
-  <div id="message" class="message" role="status"></div>
-
-  <p class="note">
-    Demo interface only. Account creation and login are not connected
-    to a secure server yet. Do not enter a real password.
-  </p>
-
-  <a class="home" href="index.html">
-    ← Back to PALLAPU Shopping
-  </a>
-
-</div>
+<p id="message" role="status">Connecting to PALLAPU account service...</p>
+<p><a href="index.html">← Back to Store</a></p>
+</section>
 </main>
 
-<script>
-let currentRole = "Customer";
-let currentMode = "Register";
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-function setRole(role){
-  currentRole = role;
+const firebaseConfig = {
+  apiKey: "AIzaSyC2fEW-8jb-Wc6x5s3LjDpQtxLVvSp9ZUg",
+  authDomain: "pallapu-online-shopping.firebaseapp.com",
+  projectId: "pallapu-online-shopping",
+  storageBucket: "pallapu-online-shopping.firebasestorage.app",
+  messagingSenderId: "688226618402",
+  appId: "1:688226618402:web:1aaa2e3cdb1f106b1b0e7b",
+  measurementId: "G-3K56RW8H51"
+};
 
-  document.getElementById("customerBtn")
-    .classList.toggle("active", role === "Customer");
+const message = document.getElementById("message");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const nameInput = document.getElementById("name");
+const roleInput = document.getElementById("role");
+const registerButton = document.getElementById("register");
+const loginButton = document.getElementById("login");
+const logoutButton = document.getElementById("logout");
 
-  document.getElementById("sellerBtn")
-    .classList.toggle("active", role === "Seller");
+let auth;
 
-  document.getElementById("storeGroup")
-    .classList.toggle("hidden", role !== "Seller");
-
-  document.getElementById("storeName").required =
-    role === "Seller" && currentMode === "Register";
-
-  updateForm();
+try {
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  message.textContent = "Firebase connected. You can register or login.";
+} catch (error) {
+  message.textContent = "Firebase setup error: " + error.message;
 }
 
-function setMode(mode){
-  currentMode = mode;
+registerButton.addEventListener("click", async () => {
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
 
-  document.getElementById("loginBtn")
-    .classList.toggle("active", mode === "Login");
-
-  document.getElementById("registerBtn")
-    .classList.toggle("active", mode === "Register");
-
-  updateForm();
-}
-
-function updateForm(){
-  const registering = currentMode === "Register";
-
-  document.getElementById("heading").textContent =
-    (registering ? "Create " : "") +
-    currentRole + (registering ? " Account" : " Login");
-
-  document.getElementById("nameGroup")
-    .classList.toggle("hidden", !registering);
-
-  document.getElementById("phoneGroup")
-    .classList.toggle("hidden", !registering);
-
-  document.getElementById("confirmGroup")
-    .classList.toggle("hidden", !registering);
-
-  document.getElementById("storeGroup")
-    .classList.toggle("hidden",
-      currentRole !== "Seller" || !registering);
-
-  document.getElementById("fullName").required = registering;
-  document.getElementById("phone").required = registering;
-  document.getElementById("confirmPassword").required = registering;
-  document.getElementById("storeName").required =
-    registering && currentRole === "Seller";
-
-  document.getElementById("password").autocomplete =
-    registering ? "new-password" : "current-password";
-
-  document.getElementById("submitBtn").textContent =
-    registering ? "Create Account" : "Login";
-
-  document.getElementById("message").style.display = "none";
-}
-
-document.getElementById("accountForm").addEventListener(
-  "submit", function(event){
-    event.preventDefault();
-
-    const password = document.getElementById("password").value;
-    const message = document.getElementById("message");
-
-    if(currentMode === "Register"){
-      const confirm =
-        document.getElementById("confirmPassword").value;
-
-      if(password !== confirm){
-        message.textContent =
-          "Passwords do not match. Please try again.";
-        message.style.display = "block";
-        return;
-      }
-    }
-
-    message.textContent =
-      currentMode === "Register"
-      ? "Registration interface is ready! Real account creation " +
-        "requires a secure backend and database."
-      : "Login interface is ready! Real login requires a secure " +
-        "authentication service.";
-
-    message.style.display = "block";
+  if (!name) {
+    message.textContent = "Please enter your full name.";
+    return;
   }
-);
+  if (!email || password.length < 6) {
+    message.textContent = "Enter a valid email and password of at least 6 characters.";
+    return;
+  }
 
-setRole("Customer");
-setMode("Register");
+  registerButton.disabled = true;
+  try {
+    const credential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(credential.user, { displayName: name });
+
+    // Role is only a UI preference. It does NOT grant trusted seller/admin permissions.
+    message.textContent =
+      "Account created successfully! Signed in as " + credential.user.email +
+      ". Selected account type: " + roleInput.value +
+      ". Seller approval and secure role management must be configured separately.";
+  } catch (error) {
+    message.textContent = "Registration failed: " + error.message;
+  } finally {
+    registerButton.disabled = false;
+  }
+});
+
+loginButton.addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password) {
+    message.textContent = "Enter your email and password.";
+    return;
+  }
+
+  loginButton.disabled = true;
+  try {
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    message.textContent = "Login successful! Welcome, " +
+      (credential.user.displayName || credential.user.email) + ".";
+  } catch (error) {
+    message.textContent = "Login failed: " + error.message;
+  } finally {
+    loginButton.disabled = false;
+  }
+});
+
+logoutButton.addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    message.textContent = "You have logged out.";
+  } catch (error) {
+    message.textContent = "Logout failed: " + error.message;
+  }
+});
+
+if (auth) {
+  onAuthStateChanged(auth, user => {
+    logoutButton.hidden = !user;
+    if (user) {
+      message.textContent = "Signed in as " + user.email + ".";
+    }
+  });
+}
 </script>
-
 </body>
 </html>
