@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PALLAPU Admin Dashboard</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f5f9;color:#222}
+header{background:#5624b8;color:white;padding:20px}
+header h1{margin:0}
+header p{margin-bottom:0}
+.container{max-width:1000px;margin:auto;padding:16px}
+.notice{background:#fff3cd;padding:12px;border-radius:8px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;padding:18px;border-radius:12px;box-shadow:0 2px 8px #0001}
+.number{font-size:28px;font-weight:bold;color:#5624b8}
+h2{font-size:19px}
+button,.link{display:inline-block;padding:11px 14px;border:0;border-radius:7px;background:#5624b8;color:white;text-decoration:none;cursor:pointer;margin:4px 0}
+.secondary{background:#444}
+.danger{background:#b42318}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:6px 0 12px}
+table{width:100%;border-collapse:collapse;background:white}
+td,th{text-align:left;padding:10px;border-bottom:1px solid #eee}
+.table-wrap{overflow-x:auto}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>🛍️ PALLAPU</h1>
+  <p>Admin Dashboard</p>
+</header>
+
+<main class="container">
+
+  <div class="notice">
+    <strong>Demo Mode:</strong> ఈ dashboardలో చూపించే గణాంకాలు
+    నమూనా మాత్రమే. ఇది నిజమైన customers, sellers, orders లేదా
+    payments డేటాను పొందదు. నిజమైన Admin security ఇంకా ఏర్పాటు చేయాలి.
+  </div>
+
+  <h2>📊 Store Overview</h2>
+
+  <div class="grid">
+    <div class="card">
+      <div>Total Products</div>
+      <div class="number" id="productsCount">0</div>
+    </div>
+
+    <div class="card">
+      <div>Total Customers</div>
+      <div class="number">—</div>
+    </div>
+
+    <div class="card">
+      <div>Total Sellers</div>
+      <div class="number">—</div>
+    </div>
+
+    <div class="card">
+      <div>Total Orders</div>
+      <div class="number">—</div>
+    </div>
+  </div>
+
+  <section class="card" style="margin-top:18px">
+    <h2>📦 Add Demo Product</h2>
+    <p>ఈ ఉత్పత్తి ఈ బ్రౌజర్‌లో మాత్రమే సేవ్ అవుతుంది.</p>
+
+    <form id="productForm">
+      <label for="productName">Product Name</label>
+      <input id="productName" maxlength="100" required>
+
+      <label for="productPrice">Price (₹)</label>
+      <input id="productPrice" type="number" min="1" max="10000000" step="1" required>
+
+      <button type="submit">Add Product</button>
+    </form>
+
+    <div id="message" role="status"></div>
+  </section>
+
+  <section class="card" style="margin-top:18px">
+    <h2>🛒 Demo Product List</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="productRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:18px">
+    <h2>⚙️ Admin Actions</h2>
+    <p>Seller Approval, Product Approval, Orders, and Sales Reports will need a secure backend.</p>
+    <button class="secondary" id="refreshButton">Refresh Dashboard</button>
+    <a class="link" href="index.html">View Store</a>
+  </section>
+
+</main>
+
+<script>
+const storageKey = "pallapuAdminDemoProducts";
+
+function readProducts(){
+  try {
+    const data = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+function renderProducts(){
+  const products = readProducts();
+  const rows = document.getElementById("productRows");
+  rows.replaceChildren();
+
+  document.getElementById("productsCount").textContent = products.length;
+
+  products.forEach((product, index) => {
+    const row = document.createElement("tr");
+    const nameCell = document.createElement("td");
+    const priceCell = document.createElement("td");
+    const actionCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+
+    nameCell.textContent = product.name;
+    priceCell.textContent = "₹" + Number(product.price).toLocaleString("en-IN");
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "danger";
+
+    deleteButton.addEventListener("click", () => {
+      if (!confirm("Delete this demo product?")) return;
+      const current = readProducts();
+      current.splice(index, 1);
+      localStorage.setItem(storageKey, JSON.stringify(current));
+      renderProducts();
+    });
+
+    actionCell.appendChild(deleteButton);
+    row.append(nameCell, priceCell, actionCell);
+    rows.appendChild(row);
+  });
+}
+
+document.getElementById("productForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = document.getElementById("productName").value.trim();
+  const price = Number(document.getElementById("productPrice").value);
+
+  if (!name || !Number.isFinite(price) || price < 1) {
+    document.getElementById("message").textContent = "Enter a valid name and price.";
+    return;
+  }
+
+  const products = readProducts();
+  products.push({ name, price });
+  localStorage.setItem(storageKey, JSON.stringify(products));
+
+  document.getElementById("productForm").reset();
+  document.getElementById("message").textContent =
+    "Demo product added to this browser.";
+  renderProducts();
+});
+
+document.getElementById("refreshButton").addEventListener("click", renderProducts);
+
+renderProducts();
+</script>
+
+</body>
+</html>
