@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PALLAPU - Login & Registration</title>
+<title>PALLAPU - Login & Register</title>
 
 <style>
 *{box-sizing:border-box}
@@ -16,28 +16,32 @@ body{
 header{
   background:#5422a8;
   color:white;
-  padding:20px;
   text-align:center;
+  padding:22px;
 }
-header h1{margin:0;font-size:28px}
-header p{margin-bottom:0}
+header h1{margin:0;font-size:29px}
+header p{margin:8px 0 0}
 .container{
   max-width:440px;
   margin:25px auto;
-  padding:20px;
+  padding:15px;
 }
 .card{
   background:white;
   padding:22px;
   border-radius:15px;
-  box-shadow:0 4px 18px #00000010;
+  box-shadow:0 4px 15px #00000010;
 }
-.tabs{
+.roles,.actions{
   display:flex;
-  gap:8px;
-  margin-bottom:20px;
+  gap:10px;
+  margin-bottom:18px;
 }
-.tabs button{
+button{
+  cursor:pointer;
+  font-size:15px;
+}
+.roles button,.actions button{
   flex:1;
   padding:12px 5px;
   border:0;
@@ -46,60 +50,57 @@ header p{margin-bottom:0}
   color:#5422a8;
   font-weight:bold;
 }
-.tabs button.active{
+button.active{
   background:#5422a8;
   color:white;
 }
-h2{font-size:22px;margin-top:0}
+h2{margin:5px 0 18px;font-size:23px}
 label{
   display:block;
-  margin-top:14px;
-  margin-bottom:6px;
-  font-size:14px;
+  margin:13px 0 6px;
   font-weight:bold;
+  font-size:14px;
 }
-input,select{
+input{
   width:100%;
   padding:12px;
   border:1px solid #ccc;
   border-radius:8px;
   font-size:15px;
-  background:white;
 }
-.primary{
+.submit{
   width:100%;
   padding:13px;
   margin-top:20px;
-  background:#5422a8;
-  color:white;
   border:0;
   border-radius:8px;
-  font-size:16px;
+  color:white;
+  background:#5422a8;
   font-weight:bold;
 }
+.hidden{display:none}
 .message{
+  display:none;
   margin-top:15px;
   padding:12px;
   border-radius:8px;
   background:#f0eafa;
   color:#5422a8;
   line-height:1.5;
-  display:none;
 }
 .home{
   display:block;
-  margin-top:20px;
   text-align:center;
+  margin-top:20px;
   color:#5422a8;
   text-decoration:none;
 }
 .note{
+  color:#777;
   font-size:12px;
-  color:#666;
   line-height:1.6;
-  margin-top:15px;
+  margin-top:18px;
 }
-.hidden{display:none}
 </style>
 </head>
 
@@ -110,86 +111,162 @@ input,select{
   <p>Your Shopping Destination</p>
 </header>
 
-<div class="container">
-  <div class="card">
+<main class="container">
+<div class="card">
 
-    <div class="tabs">
-      <button id="customerTab" class="active"
-        onclick="setRole('Customer')">Customer</button>
-      <button id="sellerTab"
-        onclick="setRole('Seller')">Seller</button>
+  <div class="roles">
+    <button id="customerBtn" class="active"
+      type="button" onclick="setRole('Customer')">
+      🛍️ Customer
+    </button>
+
+    <button id="sellerBtn" type="button"
+      onclick="setRole('Seller')">
+      🏪 Seller
+    </button>
+  </div>
+
+  <div class="actions">
+    <button id="loginBtn" type="button"
+      onclick="setMode('Login')">Login</button>
+
+    <button id="registerBtn" class="active"
+      type="button" onclick="setMode('Register')">
+      Register
+    </button>
+  </div>
+
+  <h2 id="heading">Create Customer Account</h2>
+
+  <form id="accountForm">
+
+    <div id="nameGroup">
+      <label for="fullName">Full Name</label>
+      <input id="fullName" type="text"
+        placeholder="Enter your full name"
+        autocomplete="name">
     </div>
 
-    <h2 id="heading">Customer Account</h2>
+    <div id="storeGroup" class="hidden">
+      <label for="storeName">Store Name</label>
+      <input id="storeName" type="text"
+        placeholder="Enter your store name">
+    </div>
 
-    <form id="accountForm">
-      <div id="nameField">
-        <label for="name">Full Name</label>
-        <input id="name" type="text" autocomplete="name"
-          placeholder="Enter your full name" required>
-      </div>
-
-      <div id="storeField" class="hidden">
-        <label for="store">Store Name</label>
-        <input id="store" type="text"
-          placeholder="Enter your store name">
-      </div>
-
+    <div id="emailGroup">
       <label for="email">Email Address</label>
-      <input id="email" type="email" autocomplete="email"
-        placeholder="Enter your email" required>
+      <input id="email" type="email"
+        placeholder="Enter your email"
+        autocomplete="email" required>
+    </div>
 
+    <div id="phoneGroup">
       <label for="phone">Phone Number</label>
-      <input id="phone" type="tel" autocomplete="tel"
-        placeholder="Enter phone number" required>
+      <input id="phone" type="tel"
+        placeholder="Enter your phone number"
+        autocomplete="tel">
+    </div>
 
+    <div>
       <label for="password">Password</label>
       <input id="password" type="password"
-        autocomplete="new-password"
-        placeholder="Create a password (minimum 8 characters)"
+        placeholder="Enter password"
+        autocomplete="current-password"
         minlength="8" required>
+    </div>
 
-      <button class="primary" type="submit">Continue</button>
-    </form>
+    <div id="confirmGroup">
+      <label for="confirmPassword">Confirm Password</label>
+      <input id="confirmPassword" type="password"
+        placeholder="Re-enter password"
+        minlength="8">
+    </div>
 
-    <div id="message" class="message" role="status"></div>
+    <button class="submit" id="submitBtn" type="submit">
+      Create Account
+    </button>
 
-    <p class="note">
-      Demo only: this page does not create a real account or securely
-      save passwords. Do not enter a real password. Real customer and
-      seller accounts require a secure backend and database.
-    </p>
+  </form>
 
-    <a class="home" href="index.html">← Back to PALLAPU Shopping</a>
+  <div id="message" class="message" role="status"></div>
 
-  </div>
+  <p class="note">
+    Demo interface only. Account creation and login are not connected
+    to a secure server yet. Do not enter a real password.
+  </p>
+
+  <a class="home" href="index.html">
+    ← Back to PALLAPU Shopping
+  </a>
+
 </div>
+</main>
 
 <script>
 let currentRole = "Customer";
+let currentMode = "Register";
 
 function setRole(role){
   currentRole = role;
 
-  document.getElementById("customerTab").classList.toggle(
-    "active", role === "Customer"
-  );
+  document.getElementById("customerBtn")
+    .classList.toggle("active", role === "Customer");
 
-  document.getElementById("sellerTab").classList.toggle(
-    "active", role === "Seller"
-  );
+  document.getElementById("sellerBtn")
+    .classList.toggle("active", role === "Seller");
+
+  document.getElementById("storeGroup")
+    .classList.toggle("hidden", role !== "Seller");
+
+  document.getElementById("storeName").required =
+    role === "Seller" && currentMode === "Register";
+
+  updateForm();
+}
+
+function setMode(mode){
+  currentMode = mode;
+
+  document.getElementById("loginBtn")
+    .classList.toggle("active", mode === "Login");
+
+  document.getElementById("registerBtn")
+    .classList.toggle("active", mode === "Register");
+
+  updateForm();
+}
+
+function updateForm(){
+  const registering = currentMode === "Register";
 
   document.getElementById("heading").textContent =
-    role + " Account";
+    (registering ? "Create " : "") +
+    currentRole + (registering ? " Account" : " Login");
 
-  document.getElementById("storeField").classList.toggle(
-    "hidden", role !== "Seller"
-  );
+  document.getElementById("nameGroup")
+    .classList.toggle("hidden", !registering);
 
-  document.getElementById("store").required =
-    role === "Seller";
+  document.getElementById("phoneGroup")
+    .classList.toggle("hidden", !registering);
 
-  document.getElementById("nameField").classList.remove("hidden");
+  document.getElementById("confirmGroup")
+    .classList.toggle("hidden", !registering);
+
+  document.getElementById("storeGroup")
+    .classList.toggle("hidden",
+      currentRole !== "Seller" || !registering);
+
+  document.getElementById("fullName").required = registering;
+  document.getElementById("phone").required = registering;
+  document.getElementById("confirmPassword").required = registering;
+  document.getElementById("storeName").required =
+    registering && currentRole === "Seller";
+
+  document.getElementById("password").autocomplete =
+    registering ? "new-password" : "current-password";
+
+  document.getElementById("submitBtn").textContent =
+    registering ? "Create Account" : "Login";
 
   document.getElementById("message").style.display = "none";
 }
@@ -198,16 +275,34 @@ document.getElementById("accountForm").addEventListener(
   "submit", function(event){
     event.preventDefault();
 
+    const password = document.getElementById("password").value;
     const message = document.getElementById("message");
-    message.style.display = "block";
+
+    if(currentMode === "Register"){
+      const confirm =
+        document.getElementById("confirmPassword").value;
+
+      if(password !== confirm){
+        message.textContent =
+          "Passwords do not match. Please try again.";
+        message.style.display = "block";
+        return;
+      }
+    }
 
     message.textContent =
-      "This is a demonstration page. " +
-      "Real " + currentRole +
-      " registration is not connected yet. " +
-      "No account or password has been saved.";
+      currentMode === "Register"
+      ? "Registration interface is ready! Real account creation " +
+        "requires a secure backend and database."
+      : "Login interface is ready! Real login requires a secure " +
+        "authentication service.";
+
+    message.style.display = "block";
   }
 );
+
+setRole("Customer");
+setMode("Register");
 </script>
 
 </body>
