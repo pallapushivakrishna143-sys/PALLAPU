@@ -87,3 +87,104 @@ p.style.display=p.dataset.name.toLowerCase().includes(q)?"block":"none";
 </script>
 </body>
 </html>
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PALLAPU | Login</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f3fa;color:#222}
+header{background:#5424a8;color:white;padding:22px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{margin:7px 0 0}
+.container{max-width:420px;margin:24px auto;padding:20px}
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tabs button{flex:1;padding:12px 5px;border:0;border-radius:8px;background:#ddd;color:#222}
+.tabs button.active{background:#5424a8;color:white}
+.card{background:white;padding:22px;border-radius:15px;box-shadow:0 3px 15px #ddd}
+h2{margin-top:0;text-align:center}
+label{display:block;margin-top:14px;font-size:14px}
+input,select{width:100%;padding:12px;margin-top:6px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+.primary{width:100%;padding:13px;background:#5424a8;color:white;border:0;border-radius:8px;margin-top:20px;font-size:16px}
+.switch{text-align:center;font-size:14px;margin-top:18px}
+.switch a{color:#5424a8;cursor:pointer}
+.note{font-size:12px;color:#666;line-height:1.5;text-align:center;margin-top:15px}
+</style>
+</head>
+<body>
+<header>
+<h1>PALLAPU</h1>
+<p>Your shopping destination</p>
+</header><div class="container">
+<div class="tabs">
+<button class="active" onclick="setRole('customer',this)">Customer</button>
+<button onclick="setRole('seller',this)">Seller</button>
+</div><div class="card">
+<h2 id="title">Customer Login</h2><form onsubmit="demoSubmit(event)">
+<div id="nameField" style="display:none">
+<label>Full Name</label>
+<input type="text" id="name" placeholder="Enter your full name">
+</div><div id="storeField" style="display:none">
+<label>Store Name</label>
+<input type="text" id="store" placeholder="Enter your store name">
+</div><label>Email Address</label>
+<input type="email" id="email" placeholder="Enter email" required>
+
+<label>Phone Number</label>
+<input type="tel" id="phone" placeholder="Enter phone number" pattern="[0-9]{10}" required>
+
+<label>Password</label>
+<input type="password" id="password" placeholder="Enter password" minlength="8" required>
+
+<div id="confirmField" style="display:none">
+<label>Confirm Password</label>
+<input type="password" id="confirm" placeholder="Re-enter password" minlength="8">
+</div><button class="primary" id="submitBtn" type="submit">Login</button>
+
+</form><div class="switch">
+<span id="switchText">New to PALLAPU?</span>
+<a onclick="toggleMode()" id="switchLink">Create Account</a>
+</div><p class="note">Demo interface only. Real account creation and secure authentication are not connected yet.</p>
+</div>
+</div><script>
+let role="customer";
+let mode="login";
+
+function setRole(newRole,button){
+role=newRole;
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+updateUI();
+}
+
+function toggleMode(){
+mode=mode==="login"?"register":"login";
+updateUI();
+}
+
+function updateUI(){
+const registering=mode==="register";
+document.getElementById("title").textContent=
+(role==="customer"?"Customer":"Seller")+" "+(registering?"Registration":"Login");
+document.getElementById("nameField").style.display=registering?"block":"none";
+document.getElementById("storeField").style.display=registering&&role==="seller"?"block":"none";
+document.getElementById("confirmField").style.display=registering?"block":"none";
+document.getElementById("name").required=registering;
+document.getElementById("store").required=registering&&role==="seller";
+document.getElementById("confirm").required=registering;
+document.getElementById("submitBtn").textContent=registering?"Create Account":"Login";
+document.getElementById("switchText").textContent=registering?"Already registered?":"New to PALLAPU?";
+document.getElementById("switchLink").textContent=registering?"Login":"Create Account";
+}
+
+function demoSubmit(event){
+event.preventDefault();
+if(mode==="register"&&document.getElementById("password").value!==document.getElementById("confirm").value){
+alert("Passwords do not match.");
+return;
+}
+alert("This is a demo only. Real account services are not connected yet.");
+}
+</script></body>
+</html>
