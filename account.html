@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - PALLAPU'S FASHION</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+    .card {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 10px #ddd;
+    }
+    button {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    a { color: #e91e63; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>PALLAPU'S FASHION</h2>
+    <h3>నా ఖాతా</h3>
+    <p id="status">దయచేసి వేచి ఉండండి...</p>
+    <p id="email"></p>
+    <button id="logoutBtn" hidden>Logout</button>
+    <p><a href="index.html">హోమ్ పేజీకి వెళ్లు</a></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2fEW-8jb-Wc6x5s3LjDpQtxLVvSp9ZUg",
+      authDomain: "pallapu-online-shopping.firebaseapp.com",
+      projectId: "pallapu-online-shopping",
+      storageBucket: "pallapu-online-shopping.firebasestorage.app",
+      messagingSenderId: "688226618402",
+      appId: "1:688226618402:web:1aaa2e3cdb1f106b1b0e7b",
+      measurementId: "G-3K56RW8H51"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const statusText = document.getElementById("status");
+    const emailText = document.getElementById("email");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        statusText.textContent = "మీరు లాగిన్ అయ్యారు!";
+        emailText.textContent = "ఇమెయిల్: " + (user.email || "అందుబాటులో లేదు");
+        logoutBtn.hidden = false;
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "login.html";
+      } catch (error) {
+        statusText.textContent = "లాగ్ అవుట్ కాలేదు. మళ్లీ ప్రయత్నించండి.";
+      }
+    });
+  </script>
+</body>
+</html>
