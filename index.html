@@ -208,6 +208,35 @@ function showNotice(message){
 renderProducts();
 updateCartCount();
 </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyC2fEW-8jb-Wc6x5s3LjDpQtxLVvSp9ZUg",
+  authDomain: "pallapu-online-shopping.firebaseapp.com",
+  projectId: "pallapu-online-shopping",
+  storageBucket: "pallapu-online-shopping.firebasestorage.app",
+  messagingSenderId: "688226618402",
+  appId: "1:688226618402:web:1aaa2e3cdb1f106b1b0e7b",
+  measurementId: "G-3K56RW8H51"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  const guestLinks = document.getElementById("guestLinks");
+  const accountLink = document.getElementById("accountLink");
+
+  if (guestLinks) {
+    guestLinks.style.display = user ? "none" : "";
+  }
+
+  if (accountLink) {
+    accountLink.href = user ? "account.html" : "login.html";
+  }
+});
+</script>
 </body>
 </html>
